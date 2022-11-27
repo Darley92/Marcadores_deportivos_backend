@@ -1,0 +1,53 @@
+GET http://localhost:9000/api/usuarios HTTP/1.1
+
+###
+GET http://localhost:9000/api/libros HTTP/1.1
+
+###
+POST http://localhost:9000/api/libros HTTP/1.1
+Content-Type: application/json
+
+{
+    "lib_nombre":"La Iliada 2",
+    "lib_autor":"Homero 2",
+    "lib_editorial": "Planeta 2"
+
+}
+
+###
+POST http://localhost:9000/api/usuarios HTTP/1.1
+Content-Type: application/json
+
+{
+    "usu_email":"d@j",
+    "usu_clave": "123",
+    "usu_nombres":"andres",
+    "usu_apellidos":"torres"
+}
+
+###
+DELETE http://localhost:9000/api/libros/lib_id/1 HTTP/1.1
+
+###
+DELETE http://localhost:9000/api/usuarios/usu_id/1 HTTP/1.1
+
+###
+PUT http://localhost:9000/api/libros/lib_id/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "lib_nombre":"LA ILIADA 2",
+    "lib_autor":"Homero 2",
+    "lib_editorial": "Planeta 2"
+}
+
+###
+PUT http://localhost:9000/api/usuarios/usu_id/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "usu_email":"d@hotmail",
+    "usu_clave": "123456",
+    "usu_nombres":"andres",
+    "usu_apellidos":"torres"
+}
