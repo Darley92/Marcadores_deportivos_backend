@@ -15,7 +15,8 @@ const dbOptions={
     port:'3306',
     user:'root',
     password:'123456789',
-    database:'library'
+    database:'deportes'
+    
 }
 
 /// middelwars --------------------
