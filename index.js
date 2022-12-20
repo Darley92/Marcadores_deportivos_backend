@@ -1,15 +1,15 @@
+//require('dotenv').config()
 const express =require('express')
 const mongoose =require('mongoose')
 const bodyParser=require('body-parser')
 const cors = require('cors')
 const routes = require('./routes')
-
-
+const config = require('./config');
 
 const app = express()
 mongoose.Promise=global.Promise
 mongoose.connect(
-    'mongodb://131.221.41.58:30000/deportes',
+    config.BD,
     {useNewUrlParser:true}
     )
 
@@ -26,6 +26,6 @@ try {
 //app.get('/',(req,res)=>{
  //   res.send('mi mongo 2024')
 //})
-app.listen(5000,()=>{
-    console.log('server listen 5000')
+app.listen(config.PORT,()=>{
+    console.log('server listen ' + config.PORT)
 })

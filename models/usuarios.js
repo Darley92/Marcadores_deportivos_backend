@@ -3,7 +3,6 @@
  const Schema = mongoose.Schema
 
  const usuariosSchema = new Schema({
-    usu_id:{type:Number},
     usu_email:{type:String,Trim:true,unique:true,lowercase:true},
     usu_clave:{type:String,require:true,Trim:true},
     usu_nombres:{type:String,require:true,Trim:true},

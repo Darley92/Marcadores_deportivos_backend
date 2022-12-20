@@ -12,97 +12,6 @@ exports.list = async (req, res) => {
 
 }
 
-exports.add = async (req, res) => {
-    const todos = require('../models/' + req.params.table)
-    const todo = new todos(req.body)
-    try {
-        await todo.save()
-        res.json(
-            {
-                message: 'nuevos ' + req.params.table + ' adicionado'
-            }
-        )
-    } catch (error) {
-        console.log(error)
-        res.send(error)
-        next()
-    }
-
-}
-
-exports.show = async (req, res, next) => {
-    const todos = require('../models/' + req.params.table)
-    try {
-        const usuario = await todos.findById(req.params.id)
-        if (!usuario) {
-            res.status(404).json({
-                message: 'el ' + req.params.table + ' no existe'
-            })
-        } else res.json(usuario)
-    } catch (error) {
-        res.status(400).json({
-            message: 'error al procesar la peticion'
-        })
-    }
-}
-
-exports.showUsuario = async (req, res, next) => {
-    try {
-        const todos = require('../models/' + req.params.table)
-        const usuario1 = req.params.usuario
-        const clave = req.params.clave
-        const usuario = await todos.findOne({ usu_email: usuario1, usu_clave: clave })
-        if (!usuario) {
-            res.status(404).json({
-                message: 'el ' + req.params.table + ' no existe'
-            })
-        } else res.json(usuario)
-    } catch (error) {
-        res.status(404).json({
-            message: 'error al procesar la peticion'
-        })
-
-    }
-}
-
-exports.update = async (req, res, next) => {
-    const todos = require('../models/' + req.params.table)
-    try {
-        const todo = await todos.findOneAndUpdate(
-            { _id: req.params.id },
-            req.body,
-            { new: true }
-        )
-        res.json(
-            {
-                message: req.params.table + ' actualizados'
-            }
-        )
-    } catch (error) {
-        res.status(400).json({
-            message: 'error al procesar la peticion'
-        })
-    }
-}
-
-exports.delete = async (req, res) => {
-    const todos = require('../models/' + req.params.table)
-    const id = req.params.id
-    try {
-        await todos.findByIdAndDelete({ _id: id });
-        res.json(
-            {
-                message: req.params.table + ' eliminado'
-            }
-        )
-    } catch (error) {
-        res.status(400).json({
-            message: 'error al procesar la peticion'
-        })
-    }
-
-}
-
 exports.marcadoresInicial = async (req, res) => {
     const todos = require('../models/marcadores')
 
@@ -114,7 +23,7 @@ exports.marcadoresInicial = async (req, res) => {
                     '$lookup': {
                         'from': "equipos",
                         'localField': "equi_id",
-                        'foreignField': "_id".toString(),
+                        'foreignField': "_id",
                         'as': "equipo1",
                     },
                 },
@@ -129,7 +38,7 @@ exports.marcadoresInicial = async (req, res) => {
                     '$lookup': {
                         'from': "equipos",
                         'localField': "equi_id2",
-                        'foreignField': "_id".toString(),
+                        'foreignField': "_id",
                         'as': "equipo2",
                     },
                 },
@@ -144,7 +53,7 @@ exports.marcadoresInicial = async (req, res) => {
                     '$lookup': {
                         'from': "deportes",
                         'localField': "dep_id",
-                        'foreignField': "_id".toString(),
+                        'foreignField': "_id",
                         'as': "deporte",
                     },
                 },
@@ -159,7 +68,7 @@ exports.marcadoresInicial = async (req, res) => {
                     '$lookup': {
                         'from': "usuarios",
                         'localField': "usu_id",
-                        'foreignField': "_id".toString(),
+                        'foreignField': "_id",
                         'as': "usuario",
                     },
                 },
@@ -202,6 +111,88 @@ exports.marcadoresInicial = async (req, res) => {
     } catch (error) {
         console.log(error)
         res.send(error)
+    }
+
+}
+
+
+
+
+exports.add = async (req, res) => {
+    const todos = require('../models/' + req.params.table)
+    const todo = new todos(req.body)
+    console.log(todo)
+    try {
+
+        await todo.save()
+        res.json(todo)
+    } catch (error) {
+        console.log(error)
+        res.send(error)
+        next()
+    }
+
+}
+
+exports.showUsuario = async (req, res, next) => {
+    try {
+        const todos = require('../models/' + req.params.table)
+        const usuario1 = req.params.usuario
+        const clave = req.params.clave
+        const usuario = await todos.findOne({ usu_email: usuario1, usu_clave: clave })
+        if (!usuario) {
+            res.status(404).json({
+                message: 'el ' + req.params.table + ' no existe'
+            })
+        } else res.json(usuario)
+    } catch (error) {
+        res.status(404).json({
+            message: 'error al procesar la peticion'
+        })
+
+    }
+}
+
+exports.update = async (req, res, next) => {
+    const todos = require('../models/' + req.params.table)
+    try {
+        const todo = await todos.findOneAndUpdate(
+            { _id: req.params.id },
+            req.body,
+            { new: true }
+        )
+        if (!todo) {
+
+
+        } else {
+            res.json(
+                {
+                    message: req.params.table + ' actualizados'
+                }
+            )
+        }
+
+    } catch (error) {
+        res.status(400).json({
+            message: 'error al procesar la peticion'
+        })
+    }
+}
+
+exports.delete = async (req, res) => {
+    const todos = require('../models/' + req.params.table)
+    const id = req.params.id
+    try {
+        await todos.findByIdAndDelete({ _id: id });
+        res.json(
+            {
+                message: req.params.table + ' eliminado'
+            }
+        )
+    } catch (error) {
+        res.status(400).json({
+            message: 'error al procesar la peticion'
+        })
     }
 
 }
