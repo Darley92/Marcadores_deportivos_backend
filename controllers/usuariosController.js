@@ -91,7 +91,7 @@ exports.marcadoresInicial = async (req, res) => {
                     },
                     {
                         '$sort': {
-                            'fecha': -1,
+                            'mar_fechaRegistro': -1,
                         },
                     },
                     {
