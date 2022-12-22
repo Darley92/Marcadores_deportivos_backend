@@ -13,90 +13,92 @@ exports.list = async (req, res) => {
 }
 
 exports.marcadoresInicial = async (req, res) => {
+    const todos = require('../models/marcadores')
 
     try {
-        const todos = require('../models/marcadores')
         const colMarcadores = await todos.aggregate(
             [
-  {
-    $lookup: {
-      from: "equipos",
-      localField: "equi_id",
-      foreignField: "_id".toString(),
-      as: "equipo1",
-    },
-  },
-  {
-    $unwind: {
-      path: "$equipo1",
-    },
-  },
-  {
-    $lookup: {
-      from: "equipos",
-      localField: "equi_id2",
-      foreignField: "_id".toString(),
-      as: "equipo2",
-    },
-  },
-  {
-    $unwind: {
-      path: "$equipo2",
-    },
-  },
-  {
-    $lookup: {
-      from: "deportes",
-      localField: "dep_id",
-      foreignField: "_id".toString(),
-      as: "deporte",
-    },
-  },
-  {
-    $unwind: {
-      path: "$deporte",
-    },
-  },
-  {
-    $lookup: {
-      from: "usuarios",
-      localField: "usu_id",
-      foreignField: "_id".toString(),
-      as: "usuario",
-    },
-  },
-  {
-    $unwind: {
-      path: "$usuario",
-    },
-  },
-  {
-    $project: {
-      dep_id: "$dep_id",
-      deporte: "$deporte.dep_nombre",
-      usu_id: "$usu_id",
-      usuario: "$usuario.usu_nombres",
-      mar_fechaEvento: "$mar_fechaEvento",
-      mar_horaEvento: "$mar_horaEvento",
-      mar_fechaRegistro: "$mar_fechaRegistro",
-      mar_horaRegistro: "$mar_horaRegistro",
-      equi_id: "$equi_id",
-      equipo1: "$equipo1.equi_nombre",
-      equi_id2: "$equi_id2",
-      equipo2: "$equipo2.equi_nombre",
-      mar_marcadoresqui1: "$mar_marcadoresqui1",
-      mar_marcadoresqui2: "$mar_marcadoresqui2",
-    },
-  },
-  {
-    $sort: {
-      fecha: -1,
-    },
-  },
-  {
-    $limit: req.params.lim*1,
-  },
-]
+                [
+                    {
+                        '$lookup': {
+                            'from': "equipos",
+                            'localField': "equi_id",
+                            'foreignField': "_id".toString(),
+                            'as': "equipo1",
+                        },
+                    },
+                    {
+                        '$unwind': {
+                            'path': "$equipo1",
+                        },
+                    },
+                    {
+                        '$lookup': {
+                            'from': "equipos",
+                            'localField': "equi_id2",
+                            'foreignField': "_id".toString(),
+                            'as': "equipo2",
+                        },
+                    },
+                    {
+                        '$unwind': {
+                            'path': "$equipo2",
+                        },
+                    },
+                    {
+                        '$lookup': {
+                            'from': "deportes",
+                            'localField': "dep_id",
+                            'foreignField': "_id".toString(),
+                            'as': "deporte",
+                        },
+                    },
+                    {
+                        '$unwind': {
+                            'path': "$deporte",
+                        },
+                    },
+                    {
+                        '$lookup': {
+                            'from': "usuarios",
+                            'localField': "usu_id",
+                            'foreignField': "_id".toString(),
+                            'as': "usuario",
+                        },
+                    },
+                    {
+                        '$unwind': {
+                            'path': "$usuario",
+                        },
+                    },
+                    {
+                        '$project': {
+                            'dep_id': "$dep_id",
+                            'deporte': "$deporte.dep_nombre",
+                            'usu_id': "$usu_id",
+                            'usuario': "$usuario.usu_nombres",
+                            'mar_fechaEvento': "$mar_fechaEvento",
+                            'mar_horaEvento': "$mar_horaEvento",
+                            'mar_fechaRegistro': "$mar_fechaRegistro",
+                            'mar_horaRegistro': "$mar_horaRegistro",
+                            'equi_id': "$equi_id",
+                            'equipo1': "$equipo1.equi_nombre",
+                            'equi_id2': "$equi_id2",
+                            'equipo2': "$equipo2.equi_nombre",
+                            'mar_marcadoresqui1': "$mar_marcadoresqui1",
+                            'mar_marcadoresqui2': "$mar_marcadoresqui2",
+                        },
+                    },
+                    {
+                        '$sort': {
+                            'fecha': -1,
+                        },
+                    },
+                    {
+                        '$limit': req.params.lim * 1,
+                    },
+                ]
+            ]
 
         )
         res.json(colMarcadores)
