@@ -94,7 +94,7 @@ exports.marcadoresInicial = async (req, res) => {
     },
   },
   {
-    $limit: rreq.params.lim*1,
+    $limit: req.params.lim*1,
   },
 ]
 
