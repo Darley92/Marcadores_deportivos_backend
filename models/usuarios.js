@@ -6,7 +6,8 @@
     usu_email:{type:String,Trim:true,unique:true,lowercase:true},
     usu_clave:{type:String,require:true,Trim:true},
     usu_nombres:{type:String,require:true,Trim:true},
-    usu_apellidos:{type:String,require:true,Trim:true}
+    usu_apellidos:{type:String,require:true,Trim:true},
+    per_id:{type:String}
 })
 
 //usuariosSchema.methods.encrypClave = async usu_clave =>{
