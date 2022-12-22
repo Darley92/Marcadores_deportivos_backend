@@ -23,7 +23,7 @@ exports.marcadoresInicial = async (req, res) => {
                         '$lookup': {
                             'from': "equipos",
                             'localField': "equi_id",
-                            'foreignField': "_id".toString(),
+                            'foreignField': "_id",
                             'as': "equipo1",
                         },
                     },
@@ -36,7 +36,7 @@ exports.marcadoresInicial = async (req, res) => {
                         '$lookup': {
                             'from': "equipos",
                             'localField': "equi_id2",
-                            'foreignField': "_id".toString(),
+                            'foreignField': "_id",
                             'as': "equipo2",
                         },
                     },
@@ -49,7 +49,7 @@ exports.marcadoresInicial = async (req, res) => {
                         '$lookup': {
                             'from': "deportes",
                             'localField': "dep_id",
-                            'foreignField': "_id".toString(),
+                            'foreignField': "_id",
                             'as': "deporte",
                         },
                     },
@@ -62,7 +62,7 @@ exports.marcadoresInicial = async (req, res) => {
                         '$lookup': {
                             'from': "usuarios",
                             'localField': "usu_id",
-                            'foreignField': "_id".toString(),
+                            'foreignField': "_id",
                             'as': "usuario",
                         },
                     },
