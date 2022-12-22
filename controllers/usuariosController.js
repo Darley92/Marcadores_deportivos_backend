@@ -18,91 +18,85 @@ exports.marcadoresInicial = async (req, res) => {
     try {
         const colMarcadores = await todos.aggregate(
             [
-                [{
-
-                    '$lookup': {
-                        'from': "equipos",
-                        'localField': "equi_id",
-                        'foreignField': "_id",
-                        'as': "equipo1",
+                [
+                    {
+                        '$lookup': {
+                            'from': "equipos",
+                            'localField': "equi_id",
+                            'foreignField': "_id".toString(),
+                            'as': "equipo1",
+                        },
                     },
-                },
-                {
-
-                    '$unwind': {
-                        'path': "$equipo1",
+                    {
+                        '$unwind': {
+                            'path': "$equipo1",
+                        },
                     },
-                },
-                {
-
-                    '$lookup': {
-                        'from': "equipos",
-                        'localField': "equi_id2",
-                        'foreignField': "_id",
-                        'as': "equipo2",
+                    {
+                        '$lookup': {
+                            'from': "equipos",
+                            'localField': "equi_id2",
+                            'foreignField': "_id".toString(),
+                            'as': "equipo2",
+                        },
                     },
-                },
-                {
-
-                    '$unwind': {
-                        'path': "$equipo2",
+                    {
+                        '$unwind': {
+                            'path': "$equipo2",
+                        },
                     },
-                },
-                {
-
-                    '$lookup': {
-                        'from': "deportes",
-                        'localField': "dep_id",
-                        'foreignField': "_id",
-                        'as': "deporte",
+                    {
+                        '$lookup': {
+                            'from': "deportes",
+                            'localField': "dep_id",
+                            'foreignField': "_id".toString(),
+                            'as': "deporte",
+                        },
                     },
-                },
-                {
-
-                    '$unwind': {
-                        'path': "$deporte",
+                    {
+                        '$unwind': {
+                            'path': "$deporte",
+                        },
                     },
-                },
-                {
-
-                    '$lookup': {
-                        'from': "usuarios",
-                        'localField': "usu_id",
-                        'foreignField': "_id",
-                        'as': "usuario",
+                    {
+                        '$lookup': {
+                            'from': "usuarios",
+                            'localField': "usu_id",
+                            'foreignField': "_id".toString(),
+                            'as': "usuario",
+                        },
                     },
-                },
-                {
-
-                    '$unwind': {
-                        'path': "$usuario",
+                    {
+                        '$unwind': {
+                            'path': "$usuario",
+                        },
                     },
-                },
-                {
-
-                    '$project': {
-                        'fecha': "$mar_fechaEvento",
-                        'horaEvento': "$mar_horaEvento",
-                        'fechaRegistro': "$mar_fechaRegistro",
-                        'horaRegistro': "$mar_horaRegistro",
-                        'equi1': "$equipo1.equi_nombre",
-                        'equi2': "$equipo2.equi_nombre",
-                        'marca1': "$mar_marcadoresqui1",
-                        'marca2': "$mar_marcadoresqui2",
-                        'deporte': "$deporte.dep_nombre",
-                        'usuario': "$usuario.usu_nombres",
+                    {
+                        '$project': {
+                            'dep_id': "$dep_id",
+                            'deporte': "$deporte.dep_nombre",
+                            'usu_id': "$usu_id",
+                            'usuario': "$usuario.usu_nombres",
+                            'mar_fechaEvento': "$mar_fechaEvento",
+                            'mar_horaEvento': "$mar_horaEvento",
+                            'mar_fechaRegistro': "$mar_fechaRegistro",
+                            'mar_horaRegistro': "$mar_horaRegistro",
+                            'equi_id': "$equi_id",
+                            'equipo1': "$equipo1.equi_nombre",
+                            'equi_id2': "$equi_id2",
+                            'equipo2': "$equipo2.equi_nombre",
+                            'mar_marcadoresqui1': "$mar_marcadoresqui1",
+                            'mar_marcadoresqui2': "$mar_marcadoresqui2",
+                        },
                     },
-                },
-                {
-
-                    '$sort': {
-                        'fecha': -1,
+                    {
+                        '$sort': {
+                            'fecha': -1,
+                        },
                     },
-                },
-                {
-
-                    '$limit': req.params.lim * 1,
-                },
+                    {
+                        '$limit': req.params.lim * 1,
+                    },
                 ]
             ]
 
