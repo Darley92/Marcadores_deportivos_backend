@@ -1,7 +1,7 @@
 
 exports.list = async (req, res) => {
-    const todos = require('../models/' + req.params.table)
     try {
+        const todos = require('../models/' + req.params.table)
         const colUsuarios = await todos.find({})
         res.json(colUsuarios)
     } catch (error) {
@@ -13,9 +13,9 @@ exports.list = async (req, res) => {
 }
 
 exports.marcadoresInicial = async (req, res) => {
-    const todos = require('../models/marcadores')
 
     try {
+        const todos = require('../models/marcadores')
         const colMarcadores = await todos.aggregate(
             [
                 [
@@ -113,11 +113,10 @@ exports.marcadoresInicial = async (req, res) => {
 
 
 exports.add = async (req, res) => {
-    const todos = require('../models/' + req.params.table)
-    const todo = new todos(req.body)
-    console.log(todo)
+   
     try {
-
+const todos = require('../models/' + req.params.table)
+    const todo = new todos(req.body)
         await todo.save()
         res.json(todo)
     } catch (error) {
@@ -148,8 +147,8 @@ exports.showUsuario = async (req, res, next) => {
 }
 
 exports.update = async (req, res, next) => {
-    const todos = require('../models/' + req.params.table)
     try {
+        const todos = require('../models/' + req.params.table)
         const todo = await todos.findOneAndUpdate(
             { _id: req.params.id },
             req.body,
@@ -174,9 +173,10 @@ exports.update = async (req, res, next) => {
 }
 
 exports.delete = async (req, res) => {
+    
+    try {
     const todos = require('../models/' + req.params.table)
     const id = req.params.id
-    try {
         await todos.findByIdAndDelete({ _id: id });
         res.json(
             {
