@@ -146,24 +146,6 @@ exports.showUsuario = async (req, res, next) => {
     }
 }
 
-exports.showDatos = async (req, res, next) => {
-    try {
-        const todos = require('../models/' + req.params.table)
-        const dato = req.params.dato
-        const dato2 = req.params.dato2
-        const usuario = await todos.findOne({ dato: dato2})
-        if (!usuario) {
-            res.status(404).json({
-                message: 'el ' + req.params.table + ' no existe'
-            })
-        } else res.json(usuario)
-    } catch (error) {
-        res.status(404).json({
-            message: 'error al procesar la peticion'
-        })
-
-    }
-}
 
 exports.update = async (req, res, next) => {
     try {
