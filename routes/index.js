@@ -8,7 +8,7 @@ module.exports = () => {
         router.get('/:table', usuariosController.list)
         router.get('/:table/:lim',usuariosController.marcadoresInicial)
         router.get('/:table/:usuario/:clave', usuariosController.showUsuario)
-        router.get('/llamado/:table/:dato/:dato2', usuariosController.showUsuario)
+        router.get('/llamado/:table/:dato/:dato2', usuariosController.showDatos)
         router.post('/:table', usuariosController.add)
         router.put('/:table/:id', usuariosController.update)
         router.delete('/:table/:id', usuariosController.delete)
